@@ -1,11 +1,11 @@
-// Murajaa — Service Worker v6
+// Murajaa — Service Worker v7
 // Strategy:
 //   - content.json & index.html  → network-first (fresh on every load, cache fallback)
 //   - icons / manifest / fonts   → cache-first
 //   - everything else            → stale-while-revalidate
 // Plus: skipWaiting on message + update banner support.
 
-const VERSION = 'v6';
+const VERSION = 'v7';
 const STATIC_CACHE  = `fc-static-${VERSION}`;
 const RUNTIME_CACHE = `fc-runtime-${VERSION}`;
 
@@ -61,9 +61,8 @@ self.addEventListener('fetch', e => {
 
   const url = new URL(req.url);
 
-  // Never cache the SW file or GitHub API write requests
+  // Never cache the service worker itself.
   if (url.pathname.endsWith('/sw.js')) return;
-  if (url.host === 'api.github.com') return;
 
   // Network-first for HTML and content.json (so updates arrive immediately)
   if (isHTML(req) || isContentJson(url)) {

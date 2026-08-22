@@ -359,9 +359,6 @@ html:not([dir="rtl"]) .page-title {
   padding-bottom: var(--safe-bot);
   z-index: 100;
 }
-body.admin-mode .nav {
-  grid-template-columns: repeat(5, 1fr);
-}
 .nav-btn {
   display: flex;
   flex-direction: column;
@@ -4450,43 +4447,6 @@ textarea:focus-visible {
   <!-- Picker summary bar — lives OUTSIDE the scroll container so it stays pinned -->
   <div id="picker-summary-host" class="picker-summary-host" aria-hidden="true"></div>
 
-  <!-- ═══════════════ ADMIN CONTENT MANAGER ═══════════════ -->
-  <div id="screen-admin" class="screen" role="main" aria-hidden="true" inert>
-    <header class="page-header">
-      <h1 class="page-title">admin</h1>
-    </header>
-    <div class="admin-banner">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-      <span>Admin mode · only you see this</span>
-    </div>
-    <div id="admin-setup-needed" class="admin-setup-needed" style="display:none;">
-      <div class="asn-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-      </div>
-      <div class="asn-text">
-        <div class="asn-title">Setup needed on this device</div>
-        <div class="asn-sub">This phone can read live content but can't publish until you connect a GitHub token. One-time setup, ~2 minutes.</div>
-      </div>
-      <button class="btn btn-primary" onclick="adminOpenSetup()">Set up</button>
-    </div>
-    <div id="admin-status" class="admin-status"></div>
-    <div class="admin-toolbar">
-      <button class="btn btn-secondary" onclick="adminLoadFromServer()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Pull
-      </button>
-      <button class="btn btn-secondary" onclick="adminExport()" title="Download JSON backup">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Backup
-      </button>
-      <button class="btn btn-primary" onclick="adminPublish()" id="admin-publish-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-        Publish
-      </button>
-    </div>
-    <div id="admin-body"></div>
-  </div>
-
   <!-- ═══════════════ MY CARDS (student-created) ═══════════════ -->
   <div id="screen-mycards" class="screen" role="main" aria-hidden="true" inert>
     <header class="page-header">
@@ -4500,19 +4460,6 @@ textarea:focus-visible {
     <div class="modal" role="dialog" aria-modal="true" aria-label="نافذة حوار">
       <div class="modal-grip"></div>
       <div id="modal-content"></div>
-    </div>
-  </div>
-
-  <!-- ═══════════════ IMPORT PACKAGE OVERLAY ═══════════════ -->
-  <div id="mrj-overlay" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:800;overflow-y:auto;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0);">
-    <div style="max-width:540px;margin:0 auto;padding:24px 16px 40px;">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
-        <button onclick="closeMrjOverlay()" style="background:none;border:none;padding:8px;cursor:pointer;color:var(--text-muted);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        </button>
-        <div style="font-size:17px;font-weight:700;color:var(--text);">استيراد حزمة بطاقات</div>
-      </div>
-      <div id="mrj-overlay-body"></div>
     </div>
   </div>
 
@@ -4541,12 +4488,6 @@ textarea:focus-visible {
         <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/>
       </svg>
       الإعدادات
-    </button>
-    <button class="nav-btn" data-screen="admin" id="nav-admin-btn" style="display:none;" onclick="navigate('admin')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
-      </svg>
-      Admin
     </button>
   </nav>
 
@@ -4657,6 +4598,16 @@ const DB = {
     try { localStorage.removeItem(k); } catch {}
   }
 };
+
+// Scrub credentials and unpublished drafts left by pre-security releases.
+// The public app never accepts or stores repository credentials.
+[
+  'fc_' + 'gh_config',
+  'fc_' + 'admin_content',
+  'fc_' + 'admin_pending',
+  'fc_' + 'admin_last_seen_remote',
+  'fc_' + 'admin_last_pub_time'
+].forEach(key => DB.remove(key));
 
 let cards = DB.get('fc_cards') || [];
 let stats = DB.get('fc_stats') || { streak: 0, total: 0, lastDate: null };
@@ -5141,7 +5092,6 @@ function navigate(screen) {
   if (screen === 'browse') renderBrowse();
   if (screen === 'settings') renderSettings();
   if (screen === 'picker') renderPicker();
-  if (screen === 'admin') renderAdmin();
   if (screen === 'import') renderImportScreen();
   if (screen === 'hardcards') renderHardCards();
   haptic(8);
@@ -6006,95 +5956,10 @@ function studyCollection(colId) {
 // ════════════════════════════════════════════════════
 // CONTENT SYSTEM (subjects → units → lessons → cards)
 // ════════════════════════════════════════════════════
-// In-memory content tree loaded from content.json on the server
-// OR from localStorage when editing in admin mode.
+// In-memory content tree loaded from the bundled content.json file.
 let content = { version: 1, updatedAt: null, subjects: {} };
 let currentSubjectKey = null;
 let pickerSelection = { sessionSize: 20, selected: {} }; // { unitId: { all: bool, lessons: Set } }
-
-// ─── GitHub Sync (read+write content.json from a public repo) ─────────
-// Default repo — every user (admin or not) reads from here automatically.
-// Admin's local config (with token) overrides this for writes.
-const GH_DEFAULT = {
-  user: 'MalikAhed',
-  repo: 'Murajaa',
-  branch: 'main',
-  path: 'content.json'
-};
-const GitHubSync = {
-  cfg() {
-    const local = DB.get('fc_gh_config');
-    if (local && local.user && local.repo) return local;
-    return { ...GH_DEFAULT };
-  },
-  setCfg(c) { DB.set('fc_gh_config', c); },
-  isConfigured() {
-    const c = this.cfg();
-    return !!(c && c.user && c.repo);
-  },
-  canWrite() {
-    const local = DB.get('fc_gh_config');
-    return !!(local && local.user && local.repo && local.token);
-  },
-  rawUrl() {
-    const c = this.cfg(); if (!c) return null;
-    const branch = c.branch || 'main';
-    const path = c.path || 'content.json';
-    return `https://raw.githubusercontent.com/${c.user}/${c.repo}/${branch}/${path}`;
-  },
-  async read() {
-    const url = this.rawUrl(); if (!url) throw new Error('Not configured');
-    // bust CDN cache with timestamp
-    const res = await fetch(url + '?t=' + Date.now(), { cache: 'no-store' });
-    if (!res.ok) throw new Error('GitHub read HTTP ' + res.status);
-    return await res.json();
-  },
-  async _getSha() {
-    const c = this.cfg();
-    const branch = c.branch || 'main';
-    const path = c.path || 'content.json';
-    const apiUrl = `https://api.github.com/repos/${c.user}/${c.repo}/contents/${path}?ref=${branch}`;
-    const res = await fetch(apiUrl, {
-      headers: { 'Authorization': 'Bearer ' + c.token, 'Accept': 'application/vnd.github+json' }
-    });
-    if (res.status === 404) return null;
-    if (!res.ok) throw new Error('GitHub API ' + res.status);
-    const j = await res.json();
-    return j.sha;
-  },
-  async write(contentObj) {
-    const c = this.cfg();
-    if (!c || !c.token) throw new Error('No token configured');
-    const branch = c.branch || 'main';
-    const path = c.path || 'content.json';
-    const apiUrl = `https://api.github.com/repos/${c.user}/${c.repo}/contents/${path}`;
-    const sha = await this._getSha();
-    const json = JSON.stringify(contentObj, null, 2);
-    // utf-8 safe base64
-    const b64 = btoa(unescape(encodeURIComponent(json)));
-    const body = {
-      message: 'Update content.json from admin · ' + new Date().toISOString(),
-      content: b64,
-      branch
-    };
-    if (sha) body.sha = sha;
-    const res = await fetch(apiUrl, {
-      method: 'PUT',
-      headers: {
-        'Authorization': 'Bearer ' + c.token,
-        'Accept': 'application/vnd.github+json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    });
-    if (!res.ok) {
-      let msg = 'GitHub write HTTP ' + res.status;
-      try { const j = await res.json(); if (j.message) msg += ' — ' + j.message; } catch {}
-      throw new Error(msg);
-    }
-    return await res.json();
-  }
-};
 
 // ─── Per-card progress (survives publish) ─────────────────────────────
 // fc_progress: { [cardId]: { interval, repetitions, easeFactor, nextReview } }
@@ -6283,11 +6148,6 @@ function migrateContentIfNeeded(c) {
 }
 
 async function loadContent() {
-  // Admin: prefer local draft so unsaved edits don't get clobbered
-  if (isAdmin) {
-    const local = DB.get('fc_admin_content');
-    if (local) { content = local; migrateContentIfNeeded(content); ensureCardIds(content); return; }
-  }
   const useContent = data => {
     const previousVersion = DB.get('fc_content_version');
     if (previousVersion && data.updatedAt && previousVersion !== data.updatedAt) {
@@ -6312,21 +6172,7 @@ async function loadContent() {
     }
   } catch {}
 
-  // 2. Cross-origin fallback for mirrors or manual admin configurations.
-  if (GitHubSync.isConfigured()) {
-    try {
-      const data = await GitHubSync.read();
-      if (data && data.subjects) {
-        useContent(data);
-        if (isAdmin && !DB.get('fc_admin_last_seen_remote')) {
-          DB.set('fc_admin_last_seen_remote', data.updatedAt || null);
-        }
-        return;
-      }
-    } catch (e) { console.warn('GitHub fallback failed:', e.message); }
-  }
-
-  // 3. Empty seed. The UI presents a clear retry message to the user.
+  // 2. Empty seed. The UI presents a clear retry message to the user.
   if (!content.subjects) content.subjects = {};
 }
 
@@ -6736,220 +6582,9 @@ function exportPickedCardsAsPdf() {
   haptic(15);
 }
 
-// ════════════════════════════════════════════════════
-// ADMIN MODE
-// ════════════════════════════════════════════════════
-const isAdmin = new URLSearchParams(location.search).get('admin') === '1';
-let adminView = { level: 'subjects', subjectKey: null, unitId: null, lessonId: null };
-
-function initAdmin() {
-  if (!isAdmin) return;
-  document.body.classList.add('admin-mode');
-  const adminBtn = document.getElementById('nav-admin-btn');
-  adminBtn.style.display = 'flex';
-  if (GitHubSync.canWrite()) adminBtn.classList.add('connected');
-  // Load localStorage content if present, else try server
-  const local = DB.get('fc_admin_content');
-  if (local) content = local;
-}
-
-// Track whether the local draft has unpublished changes
-function setPendingChanges(v) {
-  DB.set('fc_admin_pending', v ? 1 : 0);
-  renderAdminStatus();
-}
-function hasPendingChanges() {
-  return !!DB.get('fc_admin_pending');
-}
-
-function saveAdminContent() {
-  content.updatedAt = new Date().toISOString();
-  DB.set('fc_admin_content', content);
-  setPendingChanges(true);
-}
-
-function renderAdminStatus() {
-  if (!isAdmin) return;
-  const el = document.getElementById('admin-status');
-  if (!el) return;
-  const cfg = DB.get('fc_gh_config');
-  const connected = !!(cfg && cfg.user && cfg.repo && cfg.token);
-
-  // Toggle big "Setup needed" banner
-  const banner = document.getElementById('admin-setup-needed');
-  if (banner) banner.style.display = connected ? 'none' : 'flex';
-
-  const lastPub = content && content.updatedAt
-    ? new Date(content.updatedAt).toLocaleString()
-    : 'never';
-  const totalCards = Object.values((content && content.subjects) || {}).reduce((n, s) =>
-    n + (s.units || []).reduce((m, u) => m + (u.lessons || []).reduce((k, l) => k + (l.cards || []).length, 0), 0), 0);
-  const pending = hasPendingChanges();
-
-  let dotClass = 'ok', text;
-  if (!connected) {
-    dotClass = 'warn';
-    text = `<strong>Read-only on this device</strong> · tap "Set up" above to enable Publish`;
-  } else {
-    text = `<strong>Connected</strong> · ${totalCards} cards · last edit: ${lastPub}`;
-  }
-  const pendingBadge = pending && connected ? '<span class="st-pending">unpublished</span>' : '';
-  el.innerHTML = `
-    <div class="st-dot ${dotClass}"></div>
-    <div class="st-text">${text}</div>
-    ${pendingBadge}
-  `;
-
-  // Pulse the publish button when there are unpublished changes
-  const pubBtn = document.getElementById('admin-publish-btn');
-  if (pubBtn) {
-    if (pending && connected) pubBtn.classList.add('has-pending');
-    else pubBtn.classList.remove('has-pending');
-  }
-}
-
-async function adminLoadFromServer() {
-  if (!confirm('Pull live content from GitHub (or ./content.json fallback)? Your unsaved local edits will be overwritten.')) return;
-  try {
-    let data = null;
-    if (GitHubSync.isConfigured()) {
-      try { data = await GitHubSync.read(); } catch (e) { console.warn('GH pull failed:', e.message); }
-    }
-    if (!data) {
-      const res = await fetch('./content.json?t=' + Date.now(), { cache: 'no-store' });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      data = await res.json();
-    }
-    if (!data.subjects) data.subjects = {};
-    content = data;
-    ensureCardIds(content);
-    DB.set('fc_admin_content', content);
-    DB.set('fc_admin_last_seen_remote', content.updatedAt || null);
-    setPendingChanges(false);
-    renderAdmin();
-    alert('Loaded successfully');
-  } catch (e) {
-    alert('Could not load: ' + e.message);
-  }
-}
-
-function adminExport() {
-  const totalCards = Object.values(content.subjects || {}).reduce((n, s) =>
-    n + (s.units || []).reduce((m, u) => m + (u.lessons || []).reduce((k, l) => k + (l.cards || []).length, 0), 0), 0);
-  if (totalCards === 0) {
-    if (!confirm('Content is empty. Export anyway?')) return;
-  }
-  const data = JSON.stringify(content, null, 2);
-  const blob = new Blob([data], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'content.json';
-  a.click();
-  URL.revokeObjectURL(url);
-  alert('Exported! Backup saved. (To push live to all users, use Publish instead.)');
-}
-
-// ─── Publish to GitHub (live for everyone) ────────────────────────────
-async function adminPublish() {
-  if (!GitHubSync.canWrite()) {
-    alert('GitHub not configured yet. Tap Setup first.');
-    adminOpenSetup();
-    return;
-  }
-  // Safety: check remote against the version we last loaded.
-  // Skip the check if we just published in the last 90 seconds (CDN lag would
-  // serve stale data and produce a false conflict).
-  const lastPublishedAt = DB.get('fc_admin_last_pub_time') || 0;
-  const justPublished = Date.now() - lastPublishedAt < 90000;
-  if (!justPublished) {
-    try {
-      const remote = await GitHubSync.read();
-      const lastSeen = DB.get('fc_admin_last_seen_remote');
-      // Only warn if remote.updatedAt is STRICTLY NEWER than the timestamp we
-      // last loaded (string compare on ISO timestamps works correctly).
-      if (remote && remote.updatedAt && lastSeen && remote.updatedAt > lastSeen) {
-        const proceed = confirm(
-          'The live content on GitHub is newer than what you started editing from.\n\n' +
-          'Live updated: ' + new Date(remote.updatedAt).toLocaleString() + '\n' +
-          'You loaded:    ' + new Date(lastSeen).toLocaleString() + '\n\n' +
-          'Publishing now will overwrite the newer live version. Continue anyway?\n\n' +
-          '(Cancel and tap Pull to merge first if you\'re not sure.)'
-        );
-        if (!proceed) return;
-      }
-    } catch (e) {
-      // If the safety read fails, just proceed with the publish
-      console.warn('Pre-publish safety read failed:', e.message);
-    }
-  }
-
-  const btn = document.getElementById('admin-publish-btn');
-  const orig = btn ? btn.innerHTML : '';
-  if (btn) { btn.disabled = true; btn.innerHTML = 'Publishing…'; }
-  try {
-    content.updatedAt = new Date().toISOString();
-    content.publishedBy = 'Malik';
-    content.version = 2;
-    ensureCardIds(content);
-    DB.set('fc_admin_content', content);
-    await GitHubSync.write(content);
-    DB.set('fc_content_cache', content);
-    DB.set('fc_admin_last_seen_remote', content.updatedAt);
-    DB.set('fc_admin_last_pub_time', Date.now());
-    setPendingChanges(false);
-    if (btn) { btn.innerHTML = '✓ Live'; }
-    haptic([15, 30, 15]);
-    setTimeout(() => { if (btn) { btn.innerHTML = orig; btn.disabled = false; } }, 1800);
-  } catch (e) {
-    if (btn) { btn.innerHTML = orig; btn.disabled = false; }
-    alert('Publish failed:\n\n' + e.message + '\n\nCheck your token, repo name, and internet connection.');
-  }
-}
-
-function adminOpenSetup() {
-  const cfg = GitHubSync.cfg() || {};
-  openFormModal({
-    title: 'GitHub Setup',
-    subtitle: 'One-time setup so Publish can push content.json to all users. Token stays only on this device.',
-    fields: [
-      { label: 'GitHub username', id: 'user', value: cfg.user || '', placeholder: 'e.g. malikabualatta' },
-      { label: 'Repo name', id: 'repo', value: cfg.repo || '', placeholder: 'tawjihi-content' },
-      { label: 'Branch', id: 'branch', value: cfg.branch || 'main', placeholder: 'main' },
-      { label: 'File path', id: 'path', value: cfg.path || 'content.json', placeholder: 'content.json' },
-      { label: 'Personal Access Token (write)', id: 'token', value: cfg.token || '', placeholder: 'github_pat_…', type: 'password' }
-    ],
-    onSave: async (v) => {
-      if (!v.user.trim() || !v.repo.trim()) { alert('Username and repo are required.'); return false; }
-      GitHubSync.setCfg({
-        user: v.user.trim(),
-        repo: v.repo.trim(),
-        branch: v.branch.trim() || 'main',
-        path: v.path.trim() || 'content.json',
-        token: v.token.trim()
-      });
-      // Refresh nav dot + status panel
-      const adminBtn = document.getElementById('nav-admin-btn');
-      if (adminBtn) {
-        if (GitHubSync.canWrite()) adminBtn.classList.add('connected');
-        else adminBtn.classList.remove('connected');
-      }
-      renderAdminStatus();
-      // Test read
-      try {
-        await GitHubSync.read();
-        alert('✓ GitHub connected. You can now Publish.');
-      } catch (e) {
-        alert('Saved, but read test failed: ' + e.message + '\n\nThat\'s OK if the file doesn\'t exist yet — your first Publish will create it.');
-      }
-      return true;
-    }
-  });
-}
-
 function renderAdmin() {
-  if (!isAdmin) { navigate('home'); return; }
-  renderAdminStatus();
+  navigate('home');
+  return;
   const body = document.getElementById('admin-body');
 
   if (adminView.level === 'subjects') {
@@ -6969,13 +6604,7 @@ function renderAdmin() {
           <div class="admin-subject-count">${unitCount}u · ${cardCount}c</div>
         </div>`;
     }).join('');
-    body.innerHTML = crumb + tiles + `
-      <div style="margin-top:24px;text-align:center;">
-        <button class="btn btn-secondary" onclick="adminOpenSetup()" style="font-size:12px;padding:8px 14px;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/></svg>
-          GitHub Setup
-        </button>
-      </div>`;
+    body.innerHTML = crumb + tiles;
     return;
   }
 
@@ -7736,10 +7365,11 @@ function handleImportFile(file) {
   reader.onload = function(e) {
     try {
       const data = JSON.parse(e.target.result);
-      // Route mrjVersion:1 packages to the admin import wizard
+      // Editorial packages are intentionally not accepted by the public app.
       if (data.mrjVersion === 1) {
-        if (!isAdmin) { showImportStatus('err', 'حزم البطاقات تُستورد من لوحة الإدارة فقط.'); return; }
-        handleMrjPackage(data, file.name);
+        showImportStatus('err', settings.lang === 'ar'
+          ? 'هذه حزمة تحرير وليست مجموعة بطاقات قابلة للاستيراد.'
+          : 'This is an editorial package, not an importable card deck.');
         return;
       }
       let incoming = [];
@@ -8567,7 +8197,6 @@ function checkSessionResume() {
 // INIT
 // ════════════════════════════════════════════════════
 (async () => {
-  initAdmin();
   try {
     await loadContent();
   } catch (e) {
