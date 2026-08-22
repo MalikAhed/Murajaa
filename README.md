@@ -1,123 +1,60 @@
-# Kamel Flashcards — Local Dev Project
+# مراجعة · Murajaa
 
-A flashcard web app loaded with **107 Kamel Unit 1 questions** (pages 43–66), ready to run locally in VS Code.
+تطبيق ويب تقدّمي لطلاب التوجيهي، يحوّل المراجعة إلى جلسات قصيرة ومنظّمة باستخدام التكرار المتباعد.
 
-## Quick start (30 seconds)
+**[جرّب التطبيق مباشرة](https://malikahed.github.io/Murajaa/)**
 
-1. **Open this folder in VS Code** (File → Open Folder → select this project)
-2. Install the recommended extension when VS Code prompts you (**Live Server** by Ritwick Dey) — or install manually from the Extensions panel
-3. **Right-click `index.html` → "Open with Live Server"**
-4. The app opens at `http://127.0.0.1:5500/index.html` with all 107 cards loaded
+## لماذا مراجعة؟
 
-That's it. No build step, no npm install.
+- 107 بطاقات رياضيات عربية من أسئلة وزارية وتجريبية.
+- أسئلة اختيار من متعدد وبطاقات كشف الإجابة.
+- جدولة مراجعة مبنية على خوارزمية SM-2.
+- جلسات قابلة للتخصيص مع خلط البطاقات والتراجع عن آخر تقييم.
+- متابعة البطاقات الصعبة والإحصاءات والتقدّم محلياً.
+- استيراد وتصدير مجموعات JSON دون رفع بيانات الطالب إلى خادم.
+- واجهة عربية RTL مع وضعين داكن وفاتح ودعم لوحة المفاتيح.
+- PWA قابلة للتثبيت وتعمل دون اتصال بعد الزيارة الأولى.
 
-## Alternative: use the built-in task
+## التشغيل محلياً
 
-If you don't want to install Live Server:
-
-1. Open this folder in VS Code
-2. **Ctrl+Shift+P** → type "Run Task" → pick **"Run local server"**
-3. A terminal opens running Python's `http.server` on port 8000
-4. Open `http://localhost:8000` in your browser
-
-Press **Ctrl+C** in the terminal to stop it.
-
-## What's inside
-
-```
-kamel_project/
-├── index.html              ← the whole web app (single-file)
-├── content.json            ← 107 flashcard MCQ cards (images + answers)
-├── manifest.webmanifest    ← PWA manifest
-├── sw.js                   ← service worker (offline support)
-├── icon192.png, icon512.png ← PWA icons
-├── requirements.txt        ← Python deps (only needed if rebuilding content)
-├── .vscode/                ← VS Code tasks, launch, recommended extensions
-├── tools/
-│   ├── build_content_json.py  ← regenerate content.json from crops + answers
-│   └── crop_kamel.py          ← crop a PDF into question images
-└── content_raw/
-    ├── answers.md          ← human-editable answers file
-    └── crops/              ← 107 cropped question PNGs
-```
-
-## How the cards work
-
-Tap any card in the study view:
-
-- **Single-letter answers (أ / ب / جـ / د):** 39 cards. Tap the letter → marks correct or wrong.
-- **Written answers (e.g. `ص = 5س - 4`):** 66 cards. Tap any letter → reveals the full answer text in the back. Works as a flashcard.
-- **Watermark-blocked (Q2, Q90):** 2 cards. Back says "غير متوفرة" — read these from the source PDF and edit `content_raw/answers.md` + regenerate.
-
-## Regenerating content.json
-
-If you edit `content_raw/answers.md` (e.g. fill in the blocked answers, fix typos):
-
-1. `pip install -r requirements.txt` (first time only)
-2. VS Code → **Ctrl+Shift+P** → "Run Task" → **"Rebuild content.json"**
-3. Refresh your browser (hard refresh: **Ctrl+Shift+R**)
-
-Or from terminal:
+لا يحتاج المشروع إلى بناء أو تثبيت حزم. شغّل خادماً محلياً من جذر المشروع:
 
 ```bash
-python tools/build_content_json.py \
-    content_raw/crops \
-    content_raw/answers.md \
-    Math \
-    "الوحدة الأولى — تطبيقات هندسية وفيزيائية" \
-    "أسئلة وزارية وتجريبية (ص ٤٣-٦٦)" \
-    content.json
+python3 -m http.server 8000
 ```
 
-## Adding new pages (e.g. Unit 2)
+ثم افتح [http://localhost:8000](http://localhost:8000). يلزم HTTP لأن التطبيق يحمّل `content.json` ويستخدم Service Worker؛ فتح `index.html` مباشرة عبر `file://` لا يوفّر هذه الإمكانات.
 
-1. Drop your PDF somewhere accessible
-2. Run the crop script:
-   ```bash
-   python tools/crop_kamel.py /path/to/unit2.pdf <start_page> <end_page> content_raw/unit2
-   ```
-3. Fill in answers in `content_raw/unit2/answers.md`
-4. Merge into existing content:
-   ```bash
-   python tools/build_content_json.py \
-       content_raw/unit2 \
-       content_raw/unit2/answers.md \
-       Math \
-       "الوحدة الثانية — اسم الوحدة" \
-       "اسم الدرس" \
-       content.json \
-       --merge content.json
-   ```
-5. Refresh browser
+## بنية المشروع
 
-## Why you need a server (can't just open index.html)
+```text
+.
+├── index.html            # الواجهة، منطق الدراسة، والتخزين المحلي
+├── content.json          # محتوى البطاقات المضمّن
+├── manifest.webmanifest  # تعريف التطبيق القابل للتثبيت
+├── sw.js                 # التخزين المؤقت ودعم العمل دون اتصال
+├── icon192.png
+└── icon512.png
+```
 
-The app uses `fetch()` to load `content.json`. Browsers block `fetch()` on `file://` URLs for security. You **must** serve the folder over HTTP — either Live Server or `python -m http.server`.
+## النشر على GitHub Pages
 
-If you see "1 empty card" or no cards at all when opening `index.html` directly, that's why.
+المشروع يستخدم مسارات نسبية، لذلك يعمل من المسار الفرعي `/Murajaa/` دون إعداد إضافي:
 
-## Troubleshooting
+1. افتح **Settings → Pages** في المستودع.
+2. اختر **Deploy from a branch**.
+3. اختر فرع `main` والمجلد `/ (root)` ثم احفظ.
 
-**Cards show as empty / only 1 card appears**
-- Hard refresh (**Ctrl+Shift+R** / **Cmd+Shift+R**) to clear cached content
-- Check browser DevTools Console (**F12**) — if you see `QuotaExceededError`, the content.json is too big for localStorage. The current file is 2.4 MB and should be fine.
+بعد أول نشر سيكون الرابط: `https://malikahed.github.io/Murajaa/`.
 
-**"GitHub load failed" warning in console**
-- That's harmless. The app tries to fetch content.json from a public GitHub repo first, falls back to the local file. Ignore it.
+## الخصوصية
 
-**Python tools fail with "No module named PIL"**
-- Run the "Install Python deps" task, or: `pip install -r requirements.txt`
+التقدّم والإعدادات والبطاقات الشخصية تحفظ في `localStorage` داخل متصفح المستخدم. لا توجد تحليلات أو حسابات مستخدمين أو خدمة خلفية. وضع إدارة المحتوى اختياري ومخفي، وأي رمز GitHub يضيفه المشرف يبقى على جهازه.
 
-**Arabic text looks broken / right-to-left is off**
-- Make sure your browser supports Arabic fonts (all modern browsers do). The app uses `dir="rtl"` attributes — layout should work automatically.
+## ملاحظات المحتوى
 
-## Publishing to the internet
+السؤالان اللذان حجبت علامتهما المائية الإجابة يعرضان تنبيهاً واضحاً لمراجعة المصدر. بقية المحتوى جاهز للدراسة، ويمكن تحديثه من `content.json` مع الحفاظ على البنية الحالية.
 
-This is a static site — you can deploy the whole folder to any static host:
+---
 
-- **Netlify:** drag the folder onto netlify.com/drop
-- **GitHub Pages:** push to a repo, enable Pages in Settings
-- **Vercel:** `vercel` in this folder
-- **Cloudflare Pages:** connect a git repo
-
-The service worker (`sw.js`) will cache the app for offline use on subsequent visits.
+صُمم وطُوّر في غزة بواسطة [Malik Ahed](https://github.com/MalikAhed).

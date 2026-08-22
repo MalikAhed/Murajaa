@@ -8,15 +8,22 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Murajaa">
-<meta name="description" content="Tawjihi flashcard app for students in Gaza — study smarter with spaced repetition">
+<meta name="application-name" content="مراجعة">
+<meta name="author" content="Malik Ahed">
+<meta name="description" content="تطبيق بطاقات تعليمية لطلاب التوجيهي، يدعم التكرار المتباعد ويعمل دون اتصال.">
+<meta name="robots" content="index,follow">
+<meta name="format-detection" content="telephone=no">
 <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#191919" media="(prefers-color-scheme: dark)">
-<title>مراجعة · Murajaa — Tawjihi flashcards</title>
+<meta name="theme-color" content="#0E0E12" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_PS">
+<meta property="og:title" content="مراجعة · Murajaa">
+<meta property="og:description" content="بطاقات التوجيهي مع تكرار متباعد، جلسات مركزة، ودعم كامل للعمل دون اتصال.">
+<meta property="og:url" content="https://malikahed.github.io/Murajaa/">
+<meta name="twitter:card" content="summary">
+<title>مراجعة · بطاقات التوجيهي</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon192.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%232E2E2C'/%3E%3Cpath d='M28 32h44v6H28zm0 14h44v6H28zm0 14h28v6H28z' fill='white'/%3E%3C/svg%3E">
 
 <style>
@@ -92,10 +99,10 @@
   --shadow-lg: 0 4px 12px rgba(15,15,15,0.06), 0 24px 48px rgba(15,15,15,0.08);
   --shadow-glow: 0 6px 24px rgba(46,46,44,0.12);
 
-  --font: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --font-ar: 'IBM Plex Sans Arabic', 'Geist', system-ui, sans-serif;
-  --serif: 'Geist', system-ui, sans-serif;
-  --display: 'Geist', system-ui, sans-serif;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-ar: Tahoma, Arial, system-ui, sans-serif;
+  --serif: Georgia, 'Times New Roman', serif;
+  --display: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bot: env(safe-area-inset-bottom, 0px);
@@ -3542,6 +3549,89 @@ ol.fc-list li::before {
   .rate-btn { padding: 12px 6px; }
   .study-body { max-height: calc(100vh - 90px); }
 }
+
+/* ═══════════════════════════════════════════════════
+   SHOWCASE SHELL + ACCESSIBILITY
+   A compact app composition that expands deliberately on larger screens.
+═══════════════════════════════════════════════════ */
+html { color-scheme: light dark; }
+
+body {
+  background:
+    radial-gradient(circle at 15% 10%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 35rem),
+    radial-gradient(circle at 85% 90%, color-mix(in srgb, var(--accent-2) 8%, transparent), transparent 34rem),
+    var(--bg-tint);
+}
+
+#app {
+  inline-size: 100%;
+  max-inline-size: 48rem;
+  min-block-size: 100vh;
+  min-block-size: 100svh;
+  border-inline: 1px solid var(--border);
+  box-shadow: 0 0 80px color-mix(in srgb, #000 18%, transparent);
+}
+
+.nav { max-inline-size: 48rem; }
+.screen { overscroll-behavior-y: contain; }
+.screen[aria-hidden="true"] { visibility: hidden; }
+
+button, [role="button"], select, input, textarea { touch-action: manipulation; }
+button:focus-visible,
+[role="button"]:focus-visible,
+a:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 70%, white);
+  outline-offset: 3px;
+}
+
+.icon-btn,
+.picker-back,
+.study-exit,
+.study-undo,
+.toggle { min-inline-size: 44px; min-block-size: 44px; }
+
+.nav-btn { min-block-size: 66px; }
+.import-zone { min-block-size: 12rem; }
+
+@media (min-width: 48rem) {
+  .screen { padding-inline: clamp(2rem, 5vw, 3.5rem); }
+  .stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .subjects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .hero-card { padding: 34px 32px; }
+  .hero-count { font-size: clamp(4.75rem, 10vw, 6.5rem); }
+  .nav { padding-inline: 1.5rem; }
+}
+
+@media (max-width: 30rem) {
+  .screen { padding-inline: 16px; }
+  .page-header { margin-block-end: 24px; }
+  .subject-tile { padding-inline: 12px; gap: 9px; }
+  .subject-icon { inline-size: 32px; block-size: 32px; }
+  .nav-btn { font-size: 9.5px; }
+}
+
+@media (max-height: 31rem) and (orientation: landscape) {
+  .screen { padding-block-start: max(12px, var(--safe-top)); }
+  .page-header { margin-block-end: 16px; }
+  .nav-btn { min-block-size: 54px; padding-block: 8px; }
+  .nav-btn svg { inline-size: 18px; block-size: 18px; }
+}
+
+@media (min-aspect-ratio: 2 / 1) and (min-width: 70rem) {
+  #app { max-inline-size: 52rem; }
+  .nav { max-inline-size: 52rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .screen,
+  .flashcard,
+  .subject-tile,
+  .hero-btn { transform: none !important; }
+}
 </style>
 </head>
 <body>
@@ -3562,7 +3652,7 @@ ol.fc-list li::before {
 <div id="app">
 
   <!-- ═══════════════ HOME ═══════════════ -->
-  <div id="screen-home" class="screen active">
+  <div id="screen-home" class="screen active" role="main" aria-hidden="false">
     <header class="page-header">
       <div class="brand-mark">
         <div class="brand-logo">
@@ -3577,10 +3667,10 @@ ol.fc-list li::before {
         </div>
       </div>
       <div style="display:flex;gap:8px;flex-shrink:0;">
-        <button class="icon-btn lang-btn" onclick="toggleLang()" aria-label="Toggle language" title="Language">
+        <button type="button" class="icon-btn lang-btn" onclick="toggleLang()" aria-label="تغيير اللغة إلى الإنجليزية" title="تغيير اللغة">
           <span id="lang-label" style="font-size:12px;font-weight:700;">AR</span>
         </button>
-        <button class="icon-btn" onclick="toggleTheme()" aria-label="Toggle theme" title="Toggle theme">
+        <button type="button" class="icon-btn" onclick="toggleTheme()" aria-label="تبديل المظهر" title="تبديل المظهر">
           <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
           </svg>
@@ -3614,7 +3704,7 @@ ol.fc-list li::before {
   </div>
 
   <!-- ═══════════════ IMPORT ═══════════════ -->
-  <div id="screen-import" class="screen">
+  <div id="screen-import" class="screen" role="main" aria-hidden="true" inert>
     <header class="page-header">
       <h1 class="page-title" data-i18n="importPageTitle">import</h1>
     </header>
@@ -3634,7 +3724,7 @@ ol.fc-list li::before {
     <div id="import-status"></div>
     <div id="import-preview"></div>
 
-    <div class="import-zone" id="import-zone" onclick="document.getElementById('import-file-input').click()">
+    <div class="import-zone" id="import-zone" role="button" tabindex="0" aria-controls="import-file-input" onclick="document.getElementById('import-file-input').click()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('import-file-input').click()}">
       <input type="file" id="import-file-input" accept=".json">
       <div class="import-zone-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -3647,7 +3737,7 @@ ol.fc-list li::before {
   </div>
 
   <!-- ═══════════════ BROWSE ═══════════════ -->
-  <div id="screen-browse" class="screen">
+  <div id="screen-browse" class="screen" role="main" aria-hidden="true" inert>
     <header class="page-header">
       <h1 class="page-title" data-i18n="browsePageTitle">all cards</h1>
       <span id="browse-count" style="font-size:12px;color:var(--text-muted);font-variant-numeric:tabular-nums;"></span>
@@ -3665,7 +3755,7 @@ ol.fc-list li::before {
   </div>
 
   <!-- ═══════════════ STUDY ═══════════════ -->
-  <div id="screen-study" class="screen">
+  <div id="screen-study" class="screen" role="main" aria-hidden="true" inert>
     <div class="study-header">
       <button class="study-exit" onclick="confirmExitStudy()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
@@ -3687,7 +3777,7 @@ ol.fc-list li::before {
   </div>
 
   <!-- ═══════════════ SETTINGS ═══════════════ -->
-  <div id="screen-settings" class="screen">
+  <div id="screen-settings" class="screen" role="main" aria-hidden="true" inert>
     <header class="page-header">
       <h1 class="page-title" data-i18n="settingsPageTitle">settings</h1>
     </header>
@@ -3723,14 +3813,14 @@ ol.fc-list li::before {
         <div class="setting-label" data-i18n="shuffleCards">Shuffle cards</div>
         <div class="setting-desc" data-i18n="shuffleDesc">Randomize order each session</div>
       </div>
-      <button class="toggle" id="toggle-shuffle" onclick="toggleShuffle()"></button>
+      <button type="button" class="toggle" id="toggle-shuffle" role="switch" aria-checked="false" aria-label="خلط البطاقات" onclick="toggleShuffle()"></button>
     </div>
     <div class="setting-row">
       <div class="setting-info">
         <div class="setting-label" data-i18n="hapticFeedback">Haptic feedback</div>
         <div class="setting-desc" data-i18n="hapticDesc">Vibrate on rate & reveal</div>
       </div>
-      <button class="toggle" id="toggle-haptic" onclick="toggleHaptic()"></button>
+      <button type="button" class="toggle" id="toggle-haptic" role="switch" aria-checked="false" aria-label="الاهتزاز" onclick="toggleHaptic()"></button>
     </div>
 
     <!-- Reminders section hidden — feature under development, not ready for students yet.
@@ -3742,7 +3832,7 @@ ol.fc-list li::before {
         <div class="setting-label" data-i18n="dailyReminder">Daily reminder</div>
         <div class="setting-desc" data-i18n="dailyReminderDesc">Notify me to study every day</div>
       </div>
-      <button class="toggle" id="toggle-reminder" onclick="toggleReminder()"></button>
+      <button type="button" class="toggle" id="toggle-reminder" role="switch" aria-checked="false" aria-label="التذكير اليومي" onclick="toggleReminder()"></button>
     </div>
     <div class="setting-row" id="time-row" style="display:none;">
       <div class="setting-info">
@@ -4071,7 +4161,7 @@ ol.fc-list li::before {
     }
     .subject-credit:hover { background: color-mix(in srgb, var(--text) 12%, transparent); }
   </style>
-  <div id="screen-hardcards" class="screen">
+  <div id="screen-hardcards" class="screen" role="main" aria-hidden="true" inert>
     <header class="page-header">
       <h1 class="page-title">البطاقات المُقيَّمة</h1>
     </header>
@@ -4226,9 +4316,9 @@ ol.fc-list li::before {
     }
   </style>
 
-  <div id="onboarding-overlay" style="display:none;">
+  <div id="onboarding-overlay" role="dialog" aria-modal="true" aria-label="التعريف بتطبيق مراجعة" style="display:none;">
     <div class="ob-shell">
-      <button class="ob-skip-top" onclick="hideOnboarding()">تخطي</button>
+      <button type="button" class="ob-skip-top" onclick="hideOnboarding()">تخطي المقدمة</button>
 
       <div class="ob-stage" id="ob-stage">
         <!-- Screen 1: Welcome -->
@@ -4347,7 +4437,7 @@ ol.fc-list li::before {
   </div>
 
   <!-- ═══════════════ PICKER (what to study) ═══════════════ -->
-  <div id="screen-picker" class="screen">
+  <div id="screen-picker" class="screen" role="main" aria-hidden="true" inert>
     <div class="picker-header">
       <button class="picker-back" onclick="navigate('home')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
@@ -4361,7 +4451,7 @@ ol.fc-list li::before {
   <div id="picker-summary-host" class="picker-summary-host" aria-hidden="true"></div>
 
   <!-- ═══════════════ ADMIN CONTENT MANAGER ═══════════════ -->
-  <div id="screen-admin" class="screen">
+  <div id="screen-admin" class="screen" role="main" aria-hidden="true" inert>
     <header class="page-header">
       <h1 class="page-title">admin</h1>
     </header>
@@ -4398,7 +4488,7 @@ ol.fc-list li::before {
   </div>
 
   <!-- ═══════════════ MY CARDS (student-created) ═══════════════ -->
-  <div id="screen-mycards" class="screen">
+  <div id="screen-mycards" class="screen" role="main" aria-hidden="true" inert>
     <header class="page-header">
       <h1 class="page-title">my cards</h1>
     </header>
@@ -4406,8 +4496,8 @@ ol.fc-list li::before {
   </div>
 
   <!-- ═══════════════ MODAL ═══════════════ -->
-  <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
-    <div class="modal">
+  <div class="modal-overlay" id="modal-overlay" aria-hidden="true" onclick="if(event.target===this)closeModal()">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="نافذة حوار">
       <div class="modal-grip"></div>
       <div id="modal-content"></div>
     </div>
@@ -4427,30 +4517,30 @@ ol.fc-list li::before {
   </div>
 
   <!-- ═══════════════ BOTTOM NAV ═══════════════ -->
-  <nav class="nav" id="main-nav">
-    <button class="nav-btn active" data-screen="home" onclick="navigate('home')">
+  <nav class="nav" id="main-nav" aria-label="التنقل الرئيسي">
+    <button type="button" class="nav-btn active" data-screen="home" onclick="navigate('home')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
       </svg>
       Home
     </button>
-    <button class="nav-btn" data-screen="hardcards" onclick="navigate('hardcards')">
+    <button type="button" class="nav-btn" data-screen="hardcards" onclick="navigate('hardcards')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
       </svg>
       مُقيَّمة
     </button>
-    <button class="nav-btn" data-screen="import" onclick="comingSoonToast()" style="opacity:.5;">
+    <button type="button" class="nav-btn" data-screen="import" onclick="navigate('import')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
       </svg>
-      قريباً
+      استيراد
     </button>
-    <button class="nav-btn" data-screen="settings" onclick="comingSoonToast()" style="opacity:.5;">
+    <button type="button" class="nav-btn" data-screen="settings" onclick="navigate('settings')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/>
       </svg>
-      قريباً
+      الإعدادات
     </button>
     <button class="nav-btn" data-screen="admin" id="nav-admin-btn" style="display:none;" onclick="navigate('admin')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -4752,7 +4842,7 @@ applyTheme(settings.theme || 'light');
 // ════════════════════════════════════════════════════
 const I18N = {
   en: {
-    home: 'Home', import: 'Import', browse: 'Browse', settings: 'Settings',
+    home: 'Home', hardcards: 'Rated', import: 'Import', browse: 'Browse', settings: 'Settings',
     subjects: 'Subjects', readyToStudy: 'Ready to study', startSession: 'Start session',
     allCaught: 'All caught up', comeBack: 'Come back tomorrow to keep your streak',
     dayStreak: 'day streak', totalCards: 'total cards', mastered: 'mastered', reviewed: 'reviewed',
@@ -4851,7 +4941,7 @@ const I18N = {
     malikSig: '— Malik'
   },
   ar: {
-    home: 'الرئيسية', import: 'استيراد', browse: 'تصفح', settings: 'الإعدادات',
+    home: 'الرئيسية', hardcards: 'مُقيَّمة', import: 'استيراد', browse: 'تصفح', settings: 'الإعدادات',
     subjects: 'المواد', readyToStudy: 'جاهز للدراسة', startSession: 'ابدأ الجلسة',
     allCaught: 'أنجزت كل شيء', comeBack: 'عد غداً للحفاظ على سلسلتك',
     dayStreak: 'أيام متتالية', totalCards: 'إجمالي البطاقات', mastered: 'متقن', reviewed: 'تمت المراجعة',
@@ -4956,6 +5046,10 @@ function applyLang(lang) {
   document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
   const label = document.getElementById('lang-label');
   if (label) label.textContent = lang === 'ar' ? 'EN' : 'AR';
+  const langButton = document.querySelector('.lang-btn');
+  if (langButton) langButton.setAttribute('aria-label', lang === 'ar' ? 'تغيير اللغة إلى الإنجليزية' : 'Switch language to Arabic');
+  const mainNav = document.getElementById('main-nav');
+  if (mainNav) mainNav.setAttribute('aria-label', lang === 'ar' ? 'التنقل الرئيسي' : 'Main navigation');
   // Update all data-i18n elements (works for <option> too — they support textContent)
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const k = el.getAttribute('data-i18n');
@@ -5017,11 +5111,17 @@ applyLang(settings.lang || 'ar');
 let currentScreen = 'home';
 
 function navigate(screen) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.remove('active');
+    s.setAttribute('aria-hidden', 'true');
+    s.inert = true;
+  });
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   const target = document.getElementById('screen-' + screen);
   if (!target) return;
   target.classList.add('active');
+  target.setAttribute('aria-hidden', 'false');
+  target.inert = false;
   // Trigger screen-enter animation (restart each time)
   target.classList.remove('screen-enter');
   void target.offsetWidth;
@@ -5048,26 +5148,11 @@ function navigate(screen) {
 }
 
 // ════════════════════════════════════════════════════
-// COMING SOON TOAST + CONTACT DEVELOPER + HARD CARDS
+// CONTACT DEVELOPER + HARD CARDS
 // ════════════════════════════════════════════════════
-function comingSoonToast() {
-  const existing = document.getElementById('cs-toast');
-  if (existing) existing.remove();
-  const t = document.createElement('div');
-  t.id = 'cs-toast';
-  t.textContent = 'قريباً ✨';
-  t.style.cssText = 'position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:12px 24px;border-radius:999px;font-size:14px;font-weight:600;z-index:10000;opacity:0;transition:all .3s ease;box-shadow:0 8px 24px rgba(0,0,0,.25);';
-  document.body.appendChild(t);
-  requestAnimationFrame(() => { t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)'; });
-  setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(-50%) translateY(20px)'; setTimeout(() => t.remove(), 300); }, 1800);
-  haptic(10);
-}
-
-const DEVELOPER_EMAIL = 'MALIK_EMAIL_PLACEHOLDER'; // ← swap this with real address before launch
+const PROJECT_URL = 'https://github.com/MalikAhed/Murajaa';
 function contactDeveloper() {
-  const subject = encodeURIComponent('تواصل من تطبيق مراجعة');
-  const body = encodeURIComponent('السلام عليكم،\n\n');
-  window.location.href = 'mailto:' + DEVELOPER_EMAIL + '?subject=' + subject + '&body=' + body;
+  window.open('https://github.com/MalikAhed', '_blank', 'noopener,noreferrer');
 }
 
 function reportCurrentCard() {
@@ -5092,8 +5177,8 @@ function reportCurrentCard() {
     isAr ? 'الخطأ: (اشرح هنا ما هو الخطأ)' : 'The mistake: (describe here)',
     ''
   ];
-  const body = encodeURIComponent(lines.join('\n'));
-  window.location.href = 'mailto:' + DEVELOPER_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + body;
+  const issueUrl = PROJECT_URL + '/issues/new?title=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
+  window.open(issueUrl, '_blank', 'noopener,noreferrer');
   haptic(10);
 }
 
@@ -5932,7 +6017,7 @@ let pickerSelection = { sessionSize: 20, selected: {} }; // { unitId: { all: boo
 // Admin's local config (with token) overrides this for writes.
 const GH_DEFAULT = {
   user: 'MalikAhed',
-  repo: 'Malik-abualatta',
+  repo: 'Murajaa',
   branch: 'main',
   path: 'content.json'
 };
@@ -6203,53 +6288,45 @@ async function loadContent() {
     const local = DB.get('fc_admin_content');
     if (local) { content = local; migrateContentIfNeeded(content); ensureCardIds(content); return; }
   }
-  // 1. Try GitHub raw URL (single source of truth for everyone)
-  if (GitHubSync.isConfigured()) {
-    try {
-      const data = await GitHubSync.read();
-      if (data && data.subjects) {
-        const prevCache = DB.get('fc_content_cache');
-        if (prevCache && prevCache.updatedAt && data.updatedAt && prevCache.updatedAt !== data.updatedAt) {
-          window._contentJustUpdated = true;
-        }
-        content = data;
-        migrateContentIfNeeded(content);
-        ensureCardIds(content);
-        DB.set('fc_content_cache', content);
-        if (isAdmin && !DB.get('fc_admin_last_seen_remote')) {
-          DB.set('fc_admin_last_seen_remote', data.updatedAt || null);
-        }
-        return;
-      }
-    } catch (e) { console.warn('GitHub load failed:', e.message); }
-  }
-  // 2. Bundled ./content.json (Netlify fallback)
+  const useContent = data => {
+    const previousVersion = DB.get('fc_content_version');
+    if (previousVersion && data.updatedAt && previousVersion !== data.updatedAt) {
+      window._contentJustUpdated = true;
+    }
+    if (data.updatedAt) DB.set('fc_content_version', data.updatedAt);
+    content = data;
+    migrateContentIfNeeded(content);
+    ensureCardIds(content);
+  };
+
+  // 1. Prefer the same-origin deck. It is fast, works on GitHub Pages, and the
+  // service worker keeps it available offline without filling localStorage.
   try {
     const res = await fetch('./content.json', { cache: 'no-store' });
     if (res.ok) {
       const data = await res.json();
       if (data && data.subjects) {
-        const prevCache = DB.get('fc_content_cache');
-        if (prevCache && prevCache.updatedAt && data.updatedAt && prevCache.updatedAt !== data.updatedAt) {
-          window._contentJustUpdated = true;
-        }
-        content = data;
-        migrateContentIfNeeded(content);
-        ensureCardIds(content);
-        DB.set('fc_content_cache', content);
+        useContent(data);
         return;
       }
     }
   } catch {}
-  // 3. Last cached copy (offline)
-  const cached = DB.get('fc_content_cache');
-  if (cached && cached.subjects) {
-    content = cached;
-    migrateContentIfNeeded(content);
-    ensureCardIds(content);
-    return;
+
+  // 2. Cross-origin fallback for mirrors or manual admin configurations.
+  if (GitHubSync.isConfigured()) {
+    try {
+      const data = await GitHubSync.read();
+      if (data && data.subjects) {
+        useContent(data);
+        if (isAdmin && !DB.get('fc_admin_last_seen_remote')) {
+          DB.set('fc_admin_last_seen_remote', data.updatedAt || null);
+        }
+        return;
+      }
+    } catch (e) { console.warn('GitHub fallback failed:', e.message); }
   }
-  // 4. Empty seed
+
+  // 3. Empty seed. The UI presents a clear retry message to the user.
   if (!content.subjects) content.subjects = {};
 }
 
@@ -7226,6 +7303,7 @@ function openCardModal({ title, card }, onSave) {
   window._cmFrontImage = fi;
   window._cmBackImage = bi;
   document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('modal-overlay').setAttribute('aria-hidden', 'false');
   document.getElementById('cm_save_btn').onclick = () => {
     const result = {
       front: document.getElementById('cm_front').value,
@@ -7557,6 +7635,7 @@ function openFormModal({ title, subtitle, fields, onSave }) {
     </div>
   `;
   document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('modal-overlay').setAttribute('aria-hidden', 'false');
   document.getElementById('modal-save-btn').onclick = async () => {
     const values = {};
     fields.forEach(f => {
@@ -7570,6 +7649,7 @@ function openFormModal({ title, subtitle, fields, onSave }) {
 
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
+  document.getElementById('modal-overlay').setAttribute('aria-hidden', 'true');
 }
 
 function renderImportScreen() {
@@ -8114,21 +8194,20 @@ function commitMcqResult(quality) {
 }
 
 
-// Report-a-mistake — opens email client with card pre-filled
-const REPORT_EMAIL = 'MALIK_EMAIL_PLACEHOLDER'; // ← swap this with real address before launch
+// Report-a-mistake — opens a pre-filled GitHub issue.
 function reportMistake(cardId) {
   const card = studyQueue[studyIdx] || {};
-  const subject = encodeURIComponent('خطأ في بطاقة مراجعة - ' + (card.topic || ''));
-  const body = encodeURIComponent(
+  const subject = 'خطأ في بطاقة مراجعة - ' + (card.topic || '');
+  const body =
     'البطاقة:\n\n' +
     'السؤال: ' + (card.front || '') + '\n\n' +
     'الجواب: ' + (card.back || '') + '\n\n' +
     'الدرس: ' + (card._lessonName || '') + '\n' +
     'الوحدة: ' + (card._unitName || '') + '\n' +
     'معرف البطاقة: ' + cardId + '\n\n' +
-    'الخطأ الذي لاحظته:\n'
-  );
-  window.location.href = 'mailto:' + REPORT_EMAIL + '?subject=' + subject + '&body=' + body;
+    'الخطأ الذي لاحظته:\n';
+  const issueUrl = PROJECT_URL + '/issues/new?title=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  window.open(issueUrl, '_blank', 'noopener,noreferrer');
 }
 
 function revealImageAnswer() {
@@ -8299,6 +8378,9 @@ function renderSettings() {
   document.getElementById('toggle-shuffle').className = 'toggle' + (settings.shuffle ? ' on' : '');
   document.getElementById('toggle-haptic').className = 'toggle' + (settings.haptic ? ' on' : '');
   document.getElementById('toggle-reminder').className = 'toggle' + (settings.reminder ? ' on' : '');
+  document.getElementById('toggle-shuffle').setAttribute('aria-checked', String(!!settings.shuffle));
+  document.getElementById('toggle-haptic').setAttribute('aria-checked', String(!!settings.haptic));
+  document.getElementById('toggle-reminder').setAttribute('aria-checked', String(!!settings.reminder));
   document.getElementById('time-row').style.display = settings.reminder ? 'flex' : 'none';
   document.getElementById('reminder-time').value = settings.reminderTime || '09:00';
 

@@ -1,17 +1,18 @@
-// Tawjihi in a Flash — Service Worker v5
+// Murajaa — Service Worker v6
 // Strategy:
 //   - content.json & index.html  → network-first (fresh on every load, cache fallback)
 //   - icons / manifest / fonts   → cache-first
 //   - everything else            → stale-while-revalidate
 // Plus: skipWaiting on message + update banner support.
 
-const VERSION = 'v5';
+const VERSION = 'v6';
 const STATIC_CACHE  = `fc-static-${VERSION}`;
 const RUNTIME_CACHE = `fc-runtime-${VERSION}`;
 
 const STATIC_ASSETS = [
   './',
   './index.html',
+  './content.json',
   './manifest.webmanifest',
   './icon192.png',
   './icon512.png'
@@ -115,7 +116,12 @@ async function staleWhileRevalidate(req) {
     if (resp && resp.ok) cache.put(req, resp.clone());
     return resp;
   }).catch(() => null);
-  return cached || network || new Response('Offline', { status: 503 });
+  if (cached) return cached;
+  const response = await network;
+  return response || new Response('غير متصل', {
+    status: 503,
+    headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+  });
 }
 
 // ─── Push notifications (unchanged) ──────────────────────────────────
