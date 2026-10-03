@@ -58,3 +58,10 @@ python3 -m http.server 8000
 ---
 
 صُمم وطُوّر في غزة بواسطة [Malik Ahed](https://github.com/MalikAhed).
+
+## License
+
+Original contributions by Malik Abuallatta are licensed under the
+[MIT License](LICENSE). Third-party code, adaptations, dependencies, and assets
+retain their existing licenses and notices. This license does not grant new
+rights to third-party material.
